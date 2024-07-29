@@ -1,22 +1,12 @@
-import React, { useState } from "react";
 import "./App.css";
 import { Tracking } from "./tracking/Tracking";
-import { orders } from "./orders";
+import { useDispatch, useSelector } from "react-redux";
+import { nextOrder, previousOrder } from "./redux/orderSlice";
 
 function App() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const handleNext = () => {
-    if (currentIndex < orders.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-    }
-  };
-
-  const handlePrevious = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-    }
-  };
+  const dispatch = useDispatch();
+  const orders = useSelector((state) => state.order.orders);
+  const currentIndex = useSelector((state) => state.order.currentIndex);
 
   return (
     <div>
@@ -26,11 +16,14 @@ function App() {
         date={orders[currentIndex].datetime}
       />
       <div className="buttons">
-        <button onClick={handlePrevious} disabled={currentIndex === 0}>
+        <button
+          onClick={() => dispatch(previousOrder())}
+          disabled={currentIndex === 0}
+        >
           Previous
         </button>
         <button
-          onClick={handleNext}
+          onClick={() => dispatch(nextOrder())}
           disabled={currentIndex === orders.length - 1}
         >
           Next

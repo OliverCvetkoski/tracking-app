@@ -1,0 +1,92 @@
+.tracking-bar {
+  width: 100%;
+  max-width: 600px;
+  margin: 20px auto;
+  text-align: center;
+  position: relative;
+}
+
+.tracking-bar-statuses {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  width: 100%;
+  z-index: 1;
+  left: -28px;
+  top: 2px;
+}
+
+.tracking-bar-circle {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: lightgray;
+  margin: 0 auto;
+  position: relative;
+  transition: all ease-in 0.3s;
+}
+
+.tracking-bar-filled-circle {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: blue;
+  position: absolute;
+  top: 4px;
+  left: 4px;
+}
+
+.tracking-bar-status.active .tracking-bar-circle {
+  background-color: blue;
+  transition: all ease-in 0.3s;
+}
+
+.tracking-bar-line-container {
+  position: relative;
+  height: 4px;
+  background-color: lightgray;
+  margin-top: 10px;
+  border-radius: 2px;
+  width: 90%;
+}
+
+.tracking-bar-line {
+  height: 100%;
+  background-color: blue;
+  border-radius: 2px;
+  transition: all ease-in 0.3s;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+}
+
+.header {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  padding: 10px 0;
+}
+
+.header p {
+  margin: 0;
+}
+
+.header img {
+  width: 30px;
+  height: 30px;
+}
+
+.header span {
+  font-weight: 700;
+  font-size: 20px;
+}
+
+.status.active {
+  color: blue;
+  font-weight: 600;
+}

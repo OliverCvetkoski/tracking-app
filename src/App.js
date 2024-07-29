@@ -1,23 +1,41 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import "./App.css";
+import { Tracking } from "./tracking/Tracking";
+import { orders } from "./orders";
 
 function App() {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handleNext = () => {
+    if (currentIndex < orders.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    }
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <div>
+      <Tracking
+        orders={orders}
+        orderId={orders[currentIndex].id}
+        date={orders[currentIndex].datetime}
+      />
+      <div className="buttons">
+        <button onClick={handlePrevious} disabled={currentIndex === 0}>
+          Previous
+        </button>
+        <button
+          onClick={handleNext}
+          disabled={currentIndex === orders.length - 1}
         >
-          Learn React
-        </a>
-      </header>
+          Next
+        </button>
+      </div>
     </div>
   );
 }

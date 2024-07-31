@@ -1,34 +1,28 @@
-import "./App.css";
-import { Tracking } from "./tracking/Tracking";
-import { useDispatch, useSelector } from "react-redux";
-import { nextOrder, previousOrder } from "./redux/orderSlice";
+import { useSelector } from "react-redux";
+import { Tracking } from "./components/tracking/Tracking";
+import { LoadingSpinner } from "./components/loadingSpinner/LoadingSpinner";
+import { OrderSearch } from "./components/orderSearch/OrderSearch";
+import classes from "./App.module.css";
 
 function App() {
-  const dispatch = useDispatch();
-  const orders = useSelector((state) => state.order.orders);
-  const currentIndex = useSelector((state) => state.order.currentIndex);
+  const orderProgressState = useSelector((state) => state.getOrderProgress);
 
   return (
-    <div>
-      <Tracking
-        orders={orders}
-        orderId={orders[currentIndex].id}
-        date={orders[currentIndex].datetime}
-      />
-      <div className="buttons">
-        <button
-          onClick={() => dispatch(previousOrder())}
-          disabled={currentIndex === 0}
-        >
-          Previous
-        </button>
-        <button
-          onClick={() => dispatch(nextOrder())}
-          disabled={currentIndex === orders.length - 1}
-        >
-          Next
-        </button>
-      </div>
+    <div className={classes.container}>
+      <OrderSearch />
+      {orderProgressState.status === "loading" && (
+        <div className={classes.loading}>
+          <LoadingSpinner black={true} />
+        </div>
+      )}
+      {orderProgressState.status === "success" && (
+        <Tracking order={orderProgressState.order} />
+      )}
+      {orderProgressState.status === "error" && (
+        <div className={classes.error}>
+          <div>{orderProgressState.error}</div>
+        </div>
+      )}
     </div>
   );
 }
